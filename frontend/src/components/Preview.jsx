@@ -2,20 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Play, ArrowDownCircle, ArrowUpCircle, Activity, Globe, Monitor, HelpCircle, CheckCircle2, RotateCw } from 'lucide-react';
 
-const Gauge = ({ value, max, phase }) => {
+const Gauge = ({ value, max: initialMax, phase }) => {
   const radius = 80;
   const circumference = 2 * Math.PI * radius;
   const arcLength = circumference * 0.75; // 270 degrees
-  const gapLength = circumference * 0.25;
-  const dasharray = `${arcLength} ${gapLength}`;
+  const dasharray = `${circumference} ${circumference}`;
   
-  // value from 0 to max
-  const boundedValue = Math.min(Math.max(value, 0), max);
-  const progress = boundedValue / max;
-  const dashoffset = arcLength - (progress * arcLength);
+  // Dynamic max value
+  const currentMax = value > 100 ? (value > 500 ? 1000 : 500) : 100;
+  
+  const boundedValue = Math.min(Math.max(value, 0), currentMax);
+  const progress = boundedValue / currentMax;
+  
+  // Fix: SVG stroke-dashoffset for circular gauges must use the full circumference
+  const dashoffset = circumference - (progress * arcLength);
+  const backgroundDashoffset = circumference - arcLength;
 
   // Needle angle (-135 to +135)
   const angle = -135 + (progress * 270);
+
+  // Generate dynamic ticks
+  const ticks = currentMax === 100 
+    ? [0, 20, 40, 60, 80, 100] 
+    : currentMax === 500 
+    ? [0, 100, 200, 300, 400, 500] 
+    : [0, 200, 400, 600, 800, 1000];
 
   return (
     <div className="relative w-64 h-64 mx-auto flex items-center justify-center">
@@ -35,6 +46,7 @@ const Gauge = ({ value, max, phase }) => {
           stroke="rgba(255,255,255,0.05)" 
           strokeWidth="12" 
           strokeDasharray={dasharray}
+          strokeDashoffset={backgroundDashoffset}
           strokeLinecap="round"
         />
         
@@ -45,7 +57,6 @@ const Gauge = ({ value, max, phase }) => {
           stroke="url(#gaugeGradient)" 
           strokeWidth="12" 
           strokeDasharray={dasharray}
-          strokeDashoffset={arcLength}
           animate={{ strokeDashoffset: dashoffset }}
           transition={{ type: "spring", stiffness: 50, damping: 15 }}
           strokeLinecap="round"
@@ -54,18 +65,19 @@ const Gauge = ({ value, max, phase }) => {
         {/* Needle */}
         <motion.g 
           className="origin-[100px_100px]"
-          animate={{ rotate: angle - 135 }} /* relative to the already rotated SVG */
+          animate={{ rotate: angle - 135 }}
           transition={{ type: "spring", stiffness: 50, damping: 15 }}
         >
           <line x1="100" y1="100" x2="100" y2="40" stroke="white" strokeWidth="4" strokeLinecap="round" className="opacity-90 shadow-2xl" />
           <circle cx="100" cy="100" r="8" fill="#1e293b" stroke="white" strokeWidth="3" />
         </motion.g>
 
-        {/* Ticks (simplified) */}
-        {[0, 10, 20, 30, 50, 75, 100].map((tick, i) => {
-          const tickProgress = tick / 100;
+        {/* Fixed Ticks */}
+        {ticks.map((tick, i) => {
+          const tickProgress = tick / currentMax;
           const tickAngle = -135 + (tickProgress * 270);
-          const rad = (tickAngle - 90) * (Math.PI / 180);
+          // Calculate exact SVG coordinates (0 angle is 3 o'clock, SVG is rotated 135deg)
+          const rad = (tickAngle - 225) * (Math.PI / 180);
           const x1 = 100 + Math.cos(rad) * (radius - 15);
           const y1 = 100 + Math.sin(rad) * (radius - 15);
           const x2 = 100 + Math.cos(rad) * (radius - 22);
@@ -74,9 +86,17 @@ const Gauge = ({ value, max, phase }) => {
           const ty = 100 + Math.sin(rad) * (radius - 35);
           
           return (
-            <g key={i} className="transform -rotate-[135deg] origin-[100px_100px]">
+            <g key={i}>
               <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
-              <text x={tx} y={ty} fill="rgba(255,255,255,0.7)" fontSize="10" textAnchor="middle" alignmentBaseline="middle" fontWeight="500">
+              <text 
+                x={tx} y={ty} 
+                fill="rgba(255,255,255,0.7)" 
+                fontSize="10" 
+                textAnchor="middle" 
+                alignmentBaseline="middle" 
+                fontWeight="500" 
+                transform={`rotate(-135 ${tx} ${ty})`}
+              >
                 {tick}
               </text>
             </g>
@@ -248,7 +268,7 @@ const Preview = () => {
               <button 
                 onClick={runTest}
                 disabled={testing}
-                className="group relative w-64 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="group relative w-full sm:w-64 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {testing ? <RotateCw className="w-5 h-5 animate-spin" /> : <Play className="w-5 h-5 fill-white" />}
                 {testing ? "Testing..." : (phase === 'complete' ? "Run Test Again" : "Start Live Test")}
@@ -300,7 +320,7 @@ const Preview = () => {
             <div className="w-full h-px bg-white/5 mb-6"></div>
 
             {/* Micro Stats */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-8">
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 flex items-center gap-1 mb-1"><Globe className="w-3 h-3 text-yellow-500"/> PING</span>
                 <p className="text-xl font-bold text-white tabular-nums">{phase === 'idle' ? '--' : ping} <span className="text-xs text-zinc-500 font-normal">ms</span></p>
@@ -316,7 +336,7 @@ const Preview = () => {
             </div>
 
             {/* Server Info */}
-            <div className="bg-white/[0.02] rounded-2xl p-4 grid grid-cols-2 gap-4 border border-white/5">
+            <div className="bg-white/[0.02] rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 border border-white/5">
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 flex items-center gap-1 mb-1"><Globe className="w-3 h-3 text-blue-400"/> SERVER</span>
                 <p className="text-sm font-semibold text-white">Mumbai, India</p>
