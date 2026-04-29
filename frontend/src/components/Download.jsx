@@ -62,7 +62,7 @@ const Download = () => {
 
               <div className="max-w-lg mx-auto p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-xs text-yellow-500/80 text-left leading-relaxed">
                 <p className="font-bold text-yellow-500 mb-1 uppercase tracking-wider text-[10px]">SmartScreen Note</p>
-                <p>Because this is a brand new application, Windows SmartScreen may flag the download. Click <strong>"See more" &rarr; "Keep"</strong> in your browser, and <strong>"More info" &rarr; "Run anyway"</strong> in Windows to install safely.</p>
+                <p>Because this is a brand new application, Windows SmartScreen may flag the download. After Downloading Click <strong>"See more/Three Dots" &rarr; "Keep"</strong> in your browser, and <strong>"More info" &rarr; "Run anyway"</strong> in Windows to install safely.</p>
               </div>
 
             </div>
