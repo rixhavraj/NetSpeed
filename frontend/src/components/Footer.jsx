@@ -5,7 +5,10 @@ const Footer = () => {
   return (
     <footer className="bg-background border-t border-border py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className="flex items-center gap-2 opacity-80">
+        <div 
+          className="flex items-center gap-2 opacity-80 cursor-pointer hover:opacity-100 transition-opacity"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
           <Activity className="w-5 h-5 text-primary" />
           <span className="font-bold tracking-tight">NetSpeed</span>
         </div>

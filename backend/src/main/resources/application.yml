@@ -18,4 +18,4 @@ app:
   changelog: ${APP_CHANGELOG:Initial release with real-time monitoring and lightweight performance.}
   download-dir: ${APP_DOWNLOAD_DIR:}
   cors:
-    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173}
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173,https://rixhavraj.github.io}

@@ -6,7 +6,10 @@ const Navbar = () => {
     <nav className="fixed top-0 w-full z-50 glass border-b-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-2 cursor-pointer">
+          <div 
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
             <div className="p-2 bg-primary/20 rounded-lg">
               <Activity className="w-6 h-6 text-primary" />
             </div>
