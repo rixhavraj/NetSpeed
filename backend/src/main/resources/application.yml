@@ -1,0 +1,21 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: backend
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+app:
+  version: ${APP_VERSION:1.0.0}
+  download-url: ${APP_DOWNLOAD_URL:/api/downloads/net-speed-v1.0.0.exe}
+  file-name: ${APP_FILE_NAME:net-speed-v1.0.0.exe}
+  file-size: ${APP_FILE_SIZE:54KB}
+  changelog: ${APP_CHANGELOG:Initial release with real-time monitoring and lightweight performance.}
+  download-dir: ${APP_DOWNLOAD_DIR:}
+  cors:
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173}

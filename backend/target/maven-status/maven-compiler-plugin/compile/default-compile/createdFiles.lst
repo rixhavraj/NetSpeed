@@ -1,0 +1,7 @@
+com\app\config\DownloadProperties.class
+com\app\model\AppVersion.class
+com\app\config\WebConfig.class
+com\app\config\DownloadProperties$Cors.class
+com\app\controller\DownloadController.class
+com\app\service\DownloadService.class
+com\app\Application.class

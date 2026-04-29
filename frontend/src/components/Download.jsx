@@ -1,0 +1,75 @@
+import React, { useEffect, useState } from 'react';
+import { Download as DownloadIcon, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { getDownloadUrl, getVersionInfo } from '../services/api';
+
+const Download = () => {
+  const [versionInfo, setVersionInfo] = useState({
+    version: '1.0.0',
+    downloadUrl: '/net-speed-v1.0.0.exe',
+    size: '54KB',
+    changelog: 'Initial release'
+  });
+
+  useEffect(() => {
+    let mounted = true;
+    getVersionInfo().then((info) => {
+      if (mounted) {
+        setVersionInfo(info);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const downloadUrl = getDownloadUrl(versionInfo.downloadUrl);
+
+  return (
+    <section id="download" className="py-40 relative">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[600px] bg-primary/5 rounded-full blur-[150px] -z-10" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+      
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter">Ready to upgrade?</h2>
+        <p className="text-2xl text-zinc-400 mb-16 font-light">Download the ultra-lightweight NetSpeed widget for Windows.</p>
+
+        <div className="glass rounded-[2.5rem] p-10 md:p-16 border border-white/10 relative overflow-hidden shadow-2xl">
+          {/* Animated gradient border top */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 opacity-80"></div>
+          
+            <div className="flex flex-col items-center">
+              <div className="mb-10">
+                <span className="text-zinc-500 text-xs font-bold uppercase tracking-[0.2em]">Latest Stable Release</span>
+                <h3 className="text-4xl font-black text-white mt-3 tracking-tight">Version {versionInfo.version}</h3>
+                <p className="text-zinc-500 mt-3">{versionInfo.changelog}</p>
+              </div>
+              
+              <a 
+                href={downloadUrl}
+                download="NetSpeed.exe"
+                className="group relative inline-flex items-center gap-4 bg-primary hover:bg-primary-hover text-white px-10 py-5 rounded-2xl font-bold text-xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] mb-10 w-full sm:w-auto justify-center"
+              >
+                <DownloadIcon className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
+                <span>Download for Windows</span>
+              </a>
+              
+              <div className="flex flex-wrap items-center justify-center gap-8 text-sm text-zinc-400 mb-8 font-medium">
+                <span className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-400" /> Windows 10/11</span>
+                <span className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-emerald-400" /> {versionInfo.size} Nano-build</span>
+                <span className="flex items-center gap-2"><ShieldCheck className="w-5 h-5 text-emerald-400" /> No Telemetry</span>
+              </div>
+
+              <div className="max-w-lg mx-auto p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 text-xs text-yellow-500/80 text-left leading-relaxed">
+                <p className="font-bold text-yellow-500 mb-1 uppercase tracking-wider text-[10px]">SmartScreen Note</p>
+                <p>Because this is a brand new application, Windows SmartScreen may flag the download. Click <strong>"See more" &rarr; "Keep"</strong> in your browser, and <strong>"More info" &rarr; "Run anyway"</strong> in Windows to install safely.</p>
+              </div>
+
+            </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Download;
