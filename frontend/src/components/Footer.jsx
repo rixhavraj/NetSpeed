@@ -1,4 +1,3 @@
-import React from 'react';
 import { Activity, User } from 'lucide-react';
 
 const Footer = () => {

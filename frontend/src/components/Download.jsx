@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { Download as DownloadIcon, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { getDownloadUrl, getVersionInfo } from '../services/api';
 

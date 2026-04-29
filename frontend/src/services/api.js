@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_BACKEND;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_BACKEND || 'https://netspeed-46cv.onrender.com/api';
 
 export const getVersionInfo = async () => {
     try {
@@ -11,7 +11,7 @@ export const getVersionInfo = async () => {
         console.error('Error fetching version:', error);
         return {
             version: "1.0.0",
-            downloadUrl: "/net-speed-v1.0.0.exe",
+            downloadUrl: "net-speed-v1.0.0.exe", // Removed leading slash so it's relative
             size: "54KB",
             changelog: "Initial release"
         }; // Fallback
