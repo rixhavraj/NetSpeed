@@ -23,13 +23,17 @@ export const getDownloadUrl = (path) => {
         return '#';
     }
 
-    if (path.startsWith('http://') || path.startsWith('https://')) {
+    // If it's already a full URL, return it
+    if (path.startsWith('http')) {
         return path;
     }
 
+    // If it's a backend API path, prefix with backend URL
     if (path.startsWith('/api')) {
         return `${API_BASE_URL.replace(/\/api$/, '')}${path}`;
     }
 
-    return path;
+    // Otherwise, treat it as a static file from the frontend public folder
+    // Ensure it starts with a leading slash for the root
+    return path.startsWith('/') ? path : `/${path}`;
 };
