@@ -4,10 +4,10 @@ import { getDownloadUrl, getVersionInfo } from '../services/api';
 
 const Download = () => {
   const [versionInfo, setVersionInfo] = useState({
-    version: '1.0.0',
-    downloadUrl: '/net-speed-v1.0.0.exe',
+    version: '1.0.1',
+    downloadUrl: '/net-speed-v1.0.1.exe',
     size: '54KB',
-    changelog: 'Initial release'
+    changelog: 'Added startup capabilities'
   });
 
   useEffect(() => {

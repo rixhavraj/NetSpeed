@@ -10,10 +10,10 @@ export const getVersionInfo = async () => {
     } catch (error) {
         console.error('Error fetching version:', error);
         return {
-            version: "1.0.0",
-            downloadUrl: "net-speed-v1.0.0.exe", // Removed leading slash so it's relative
+            version: "1.0.1",
+            downloadUrl: "net-speed-v1.0.1.exe", // Removed leading slash so it's relative
             size: "54KB",
-            changelog: "Initial release"
+            changelog: "Added startup capabilities"
         }; // Fallback
     }
 };
