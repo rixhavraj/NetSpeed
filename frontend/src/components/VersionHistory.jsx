@@ -1,23 +1,9 @@
 import React from 'react';
 import { Download as DownloadIcon, History, Calendar } from 'lucide-react';
 import { getDownloadUrl } from '../services/api';
+import versionsData from '../data/versions.json';
 
-const versions = [
-  {
-    version: '1.0.1',
-    date: 'Apr 30, 2026',
-    changes: ['Added Windows startup capabilities', 'Minor bug fixes'],
-    downloadUrl: '/net-speed-v1.0.1.exe',
-    size: '54KB'
-  },
-  {
-    version: '1.0.0',
-    date: 'Apr 29, 2026',
-    changes: ['Initial release', 'Real-time monitoring', 'Lightweight performance'],
-    downloadUrl: '/net-speed-v1.0.0.exe',
-    size: '54KB'
-  }
-];
+const versions = versionsData;
 
 const VersionHistory = () => {
   return (

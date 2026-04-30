@@ -1,27 +1,10 @@
 import  { useEffect, useState } from 'react';
 import { Download as DownloadIcon, CheckCircle2, ShieldCheck } from 'lucide-react';
-import { getDownloadUrl, getVersionInfo } from '../services/api';
+import { getDownloadUrl } from '../services/api';
+import versionsData from '../data/versions.json';
 
 const Download = () => {
-  const [versionInfo, setVersionInfo] = useState({
-    version: '1.0.1',
-    downloadUrl: '/net-speed-v1.0.1.exe',
-    size: '54KB',
-    changelog: 'Added startup capabilities'
-  });
-
-  useEffect(() => {
-    let mounted = true;
-    getVersionInfo().then((info) => {
-      if (mounted) {
-        setVersionInfo(info);
-      }
-    });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  const [versionInfo] = useState(versionsData[0]);
 
   const downloadUrl = getDownloadUrl(versionInfo.downloadUrl);
 
