@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import LiveStats from '../components/LiveStats';
 import Features from '../components/Features';
 import Preview from '../components/Preview';
 import Download from '../components/Download';
@@ -15,6 +16,7 @@ const Home = () => {
       <Navbar />
       <main>
         <Hero />
+        <LiveStats />
         <Features />
         <Preview />
         <Trust />
