@@ -137,26 +137,56 @@ const Preview = () => {
   const [phase, setPhase] = useState('idle'); // idle, download, upload, complete
   
   const [ping, setPing] = useState("--");
+  const [jitter, setJitter] = useState("--");
   const [downloadSpeed, setDownloadSpeed] = useState(0);
   const [uploadSpeed, setUploadSpeed] = useState(0);
   const [currentSpeed, setCurrentSpeed] = useState(0);
+  const [clientInfo, setClientInfo] = useState({ ip: "--", isp: "--", city: "--", country: "--", colo: "--" });
+
+  useEffect(() => {
+    fetch('https://speed.cloudflare.com/meta')
+      .then(res => res.json())
+      .then(data => {
+        setClientInfo({
+          ip: data.clientIp || "--",
+          isp: data.asOrganization || "--",
+          city: data.city || "--",
+          country: data.country || "--",
+          colo: data.colo || "--"
+        });
+      })
+      .catch(err => console.error("Failed to fetch client info", err));
+  }, []);
 
   const runTest = async () => {
     if (testing) return;
     setTesting(true);
     setPing("--");
+    setJitter("--");
     setDownloadSpeed(0);
     setUploadSpeed(0);
     setCurrentSpeed(0);
 
-    // 0. PING TEST
+    // 0. PING & JITTER TEST
     try {
-      const pStart = performance.now();
-      await fetch("https://speed.cloudflare.com/__down?bytes=0", { cache: "no-store", mode: "cors" });
-      const pEnd = performance.now();
-      setPing(Math.round(pEnd - pStart));
+      let pings = [];
+      for (let i = 0; i < 5; i++) {
+        const pStart = performance.now();
+        await fetch("https://speed.cloudflare.com/__down?bytes=0", { cache: "no-store", mode: "cors" });
+        const pEnd = performance.now();
+        pings.push(pEnd - pStart);
+      }
+      const avgPing = pings.reduce((a, b) => a + b, 0) / pings.length;
+      setPing(Math.round(avgPing));
+      
+      let jitterSum = 0;
+      for (let i = 1; i < pings.length; i++) {
+        jitterSum += Math.abs(pings[i] - pings[i-1]);
+      }
+      setJitter(pings.length > 1 ? Math.round(jitterSum / (pings.length - 1)) : 0);
     } catch (e) {
-      setPing("32");
+      setPing("Error");
+      setJitter("Error");
     }
     
     // 1. DOWNLOAD PHASE
@@ -191,37 +221,29 @@ const Preview = () => {
     setPhase('upload');
     setCurrentSpeed(0);
     try {
-      // Create 5MB payload
-      const payloadSize = 5 * 1024 * 1024;
-      const payload = new Uint8Array(payloadSize);
-      for(let i=0; i<payloadSize; i+=1024) payload[i] = Math.floor(Math.random() * 256);
+      const chunkSize = 1 * 1024 * 1024; // 1MB chunk
+      const chunk = new Uint8Array(chunkSize);
+      for(let i=0; i<chunkSize; i+=1024) chunk[i] = Math.floor(Math.random() * 256);
       
+      let totalUploaded = 0;
       const ulStart = performance.now();
       
-      // Simulate live updates since fetch doesn't support upload progress tracking
-      let simSpeed = 0;
-      const simInterval = setInterval(() => {
-         simSpeed = 15 + Math.random() * 5; 
-         setUploadSpeed(simSpeed);
-         setCurrentSpeed(simSpeed);
-      }, 200);
-
-      await fetch("https://speed.cloudflare.com/__up", {
-        method: 'POST',
-        mode: 'cors',
-        body: payload
-      });
-      
-      clearInterval(simInterval);
-      const ulEnd = performance.now();
-      const duration = (ulEnd - ulStart) / 1000;
-      const actualSpeed = (payloadSize * 8) / duration / 1000 / 1000;
-      
-      setUploadSpeed(actualSpeed);
-      setCurrentSpeed(actualSpeed);
+      for (let i = 0; i < 15; i++) { // Upload 15MB total in chunks
+        await fetch("https://speed.cloudflare.com/__up", {
+          method: 'POST',
+          mode: 'cors',
+          body: chunk
+        });
+        const reqEnd = performance.now();
+        totalUploaded += chunkSize;
+        
+        const duration = (reqEnd - ulStart) / 1000;
+        const currentSpeedMbps = (totalUploaded * 8) / duration / 1000 / 1000;
+        setUploadSpeed(currentSpeedMbps);
+        setCurrentSpeed(currentSpeedMbps);
+      }
     } catch (e) {
       console.error("Upload test failed", e);
-      setUploadSpeed(18.5);
     }
     
     // 3. COMPLETE
@@ -327,7 +349,7 @@ const Preview = () => {
               </div>
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 flex items-center gap-1 mb-1"><Activity className="w-3 h-3 text-purple-400"/> JITTER</span>
-                <p className="text-xl font-bold text-white tabular-nums">{phase === 'idle' ? '--' : '7'} <span className="text-xs text-zinc-500 font-normal">ms</span></p>
+                <p className="text-xl font-bold text-white tabular-nums">{phase === 'idle' ? '--' : jitter} <span className="text-xs text-zinc-500 font-normal">ms</span></p>
               </div>
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 flex items-center gap-1 mb-1"><HelpCircle className="w-3 h-3 text-red-400"/> PACKET LOSS</span>
@@ -339,13 +361,13 @@ const Preview = () => {
             <div className="bg-white/[0.02] rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 border border-white/5">
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 flex items-center gap-1 mb-1"><Globe className="w-3 h-3 text-blue-400"/> SERVER</span>
-                <p className="text-sm font-semibold text-white">Mumbai, India</p>
-                <p className="text-xs text-zinc-500">Excitel Broadband</p>
+                <p className="text-sm font-semibold text-white">{clientInfo.city !== "--" ? `${clientInfo.city}, ${clientInfo.country}` : 'Loading...'}</p>
+                <p className="text-xs text-zinc-500">{clientInfo.colo !== "--" ? `Cloudflare (${clientInfo.colo})` : '--'}</p>
               </div>
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 flex items-center gap-1 mb-1"><Monitor className="w-3 h-3 text-blue-400"/> YOUR IP</span>
-                <p className="text-sm font-semibold text-white">192.168.1.104</p>
-                <p className="text-xs text-zinc-500">Excitel Broadband</p>
+                <p className="text-sm font-semibold text-white">{clientInfo.ip !== "--" ? clientInfo.ip : 'Loading...'}</p>
+                <p className="text-xs text-zinc-500">{clientInfo.isp !== "--" ? clientInfo.isp : '--'}</p>
               </div>
             </div>
 
