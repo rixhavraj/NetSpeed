@@ -9,13 +9,13 @@ const Download = () => {
   const downloadUrl = getDownloadUrl(versionInfo.downloadUrl);
 
   return (
-    <section id="download" className="py-40 relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[600px] bg-primary/5 rounded-full blur-[150px] -z-10" />
+    <section id="download" className="py-40 relative z-10">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[600px] bg-primary/2 rounded-full blur-[150px] -z-10" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter">Ready to upgrade?</h2>
-        <p className="text-2xl text-zinc-400 mb-16 font-light">Download the ultra-lightweight NetSpeed widget for Windows.</p>
+        <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-white text-readable">Ready to upgrade?</h2>
+        <p className="text-2xl text-zinc-300 mb-16 font-light text-readable">Download the ultra-lightweight NetSpeed widget for Windows.</p>
 
         <div className="glass rounded-[2.5rem] p-10 md:p-16 border border-white/10 relative overflow-hidden shadow-2xl">
           {/* Animated gradient border top */}
@@ -23,7 +23,7 @@ const Download = () => {
           
             <div className="flex flex-col items-center">
               <div className="mb-10">
-                <span className="text-zinc-500 text-xs font-bold uppercase tracking-[0.2em]">Latest Stable Release</span>
+                <span className="text-white text-xs font-bold uppercase tracking-[0.2em]">Latest Stable Release</span>
                 <h3 className="text-4xl font-black text-white mt-3 tracking-tight">Version {versionInfo.version}</h3>
                 <p className="text-zinc-500 mt-3">{versionInfo.changelog}</p>
               </div>

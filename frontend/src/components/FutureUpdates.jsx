@@ -4,11 +4,11 @@ import { Radar, AlertTriangle, MonitorPlay, AppWindow, HardDriveDownload, Sparkl
 
 const FutureUpdates = () => {
   return (
-    <section className="py-24 relative overflow-hidden bg-[#04060f]">
+    <section className="py-24 relative overflow-hidden bg-transparent z-10">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent"></div>
       
       {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-[400px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-[400px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center text-center mb-16">
@@ -46,7 +46,7 @@ const FutureUpdates = () => {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-[#0b1021]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative shadow-2xl overflow-hidden"
+            className="bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-3xl p-8 relative shadow-2xl overflow-hidden"
           >
              {/* Radar scan animation effect */}
              <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">

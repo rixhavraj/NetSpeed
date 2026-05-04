@@ -1,16 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Download, ChevronRight, Zap } from 'lucide-react';
+import { Download, Zap, Play } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <section className="relative pt-40 pb-32 overflow-hidden flex flex-col items-center justify-center min-h-[90vh]">
-      {/* Premium Background Elements */}
-      <div className="absolute inset-0 bg-grid -z-20 opacity-[0.2]" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-primary/20 rounded-full blur-[120px] -z-10" />
-      <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-accent/20 rounded-full blur-[100px] -z-10" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
+    <section className="relative flex flex-col items-center w-full px-4 md:px-6 pt-16 md:pt-24 pb-0 overflow-visible bg-transparent">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-4xl text-center">
+        {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -24,25 +20,28 @@ const Hero = () => {
           <span className="font-medium tracking-wide">v1.0.1 is now available</span>
         </motion.div>
 
-        <motion.h1 
+        {/* Headline */}
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[1.1]"
+          className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[1.1] text-readable"
         >
           Real-time network speed. <br />
           <span className="text-gradient">Zero bloat.</span>
         </motion.h1>
 
+        {/* Subheadline */}
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-lg md:text-2xl text-zinc-400 max-w-3xl mx-auto mb-12 font-light leading-relaxed"
+          className="text-lg md:text-2xl text-zinc-300 max-w-3xl mx-auto mb-12 font-light leading-relaxed text-readable"
         >
           A beautifully minimal, always-on-top desktop widget for Windows that tracks your network activity without eating your system resources.
         </motion.p>
 
+        {/* CTA Buttons */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -3,7 +3,7 @@ import { Lock, Heart, FileCode2 } from 'lucide-react';
 
 const Trust = () => {
   return (
-    <section className="py-24 border-t border-border/50 bg-[#020202]">
+    <section className="py-24 border-t border-white/5 bg-transparent relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           <div>

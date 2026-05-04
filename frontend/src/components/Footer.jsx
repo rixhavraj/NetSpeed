@@ -2,7 +2,7 @@ import { Activity, User,  } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-background border-t border-border py-12">
+    <footer className="bg-transparent border-t border-white/5 py-12 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
         <div 
           className="flex items-center gap-2.opacity-80 cursor-pointer hover:opacity-100 transition-opacity"

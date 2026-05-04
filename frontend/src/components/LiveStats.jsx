@@ -45,7 +45,7 @@ const LiveStats = () => {
   }, []);
 
   return (
-    <section className="py-12 border-y border-white/5 bg-[#0b1021]/50 backdrop-blur-xl relative z-20">
+    <section className="py-12 border-y border-white/5  relative z-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-around gap-12 md:gap-0">
           
@@ -62,7 +62,7 @@ const LiveStats = () => {
               <Activity className="w-5 h-5 text-emerald-400 animate-pulse" />
               <h4 className="text-4xl font-black text-white tabular-nums tracking-tight">{visits.toLocaleString()}</h4>
             </div>
-            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Total Web Visits</p>
+            <p className="text-xs font-bold text-white uppercase tracking-widest">Total Web Visits</p>
           </motion.div>
 
           <div className="w-px h-24 bg-gradient-to-b from-transparent via-white/10 to-transparent hidden md:block"></div>
@@ -80,7 +80,7 @@ const LiveStats = () => {
               <Activity className="w-5 h-5 text-emerald-400 animate-pulse" />
               <h4 className="text-4xl font-black text-white tabular-nums tracking-tight">{downloads.toLocaleString()}</h4>
             </div>
-            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">App Downloads</p>
+            <p className="text-xs font-bold text-white uppercase tracking-widest">App Downloads</p>
           </motion.div>
 
           <div className="w-px h-24 bg-gradient-to-b from-transparent via-white/10 to-transparent hidden md:block"></div>
@@ -100,7 +100,7 @@ const LiveStats = () => {
             <div className="flex items-center gap-2">
               <h4 className="text-4xl font-black text-emerald-400 tracking-tight">Live</h4>
             </div>
-            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Tracker Status</p>
+            <p className="text-xs font-bold text-white uppercase tracking-widest">Tracker Status</p>
           </motion.div>
 
         </div>

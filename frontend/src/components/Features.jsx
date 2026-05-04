@@ -54,9 +54,9 @@ const Features = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Everything you need. <br/><span className="text-zinc-600">Nothing you don't.</span></h2>
-          <p className="text-xl text-zinc-400 max-w-2xl mx-auto font-light">We cut out the bloat to give you a utility that does one thing absolutely perfectly.</p>
+        <div className="text-center mb-24 relative z-10">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-white drop-shadow-sm">Everything you need. <br/><span className="text-zinc-500">Nothing you don't.</span></h2>
+          <p className="text-xl text-zinc-300 max-w-2xl mx-auto font-light drop-shadow-sm">We cut out the bloat to give you a utility that does one thing absolutely perfectly.</p>
         </div>
 
         <motion.div 
