@@ -1,23 +1,43 @@
 [
-  {
-    "version": "1.0.1",
-    "date": "Apr 30, 2026",
-    "changes": [
-      "Added Windows startup capabilities",
-      "Minor bug fixes"
-    ],
-    "downloadUrl": "https://github.com/rixhavraj/NetSpeed/releases/download/v1.0.1/net-speed-v1.0.1.exe",
-    "size": "54KB"
-  },
-  {
-    "version": "1.0.0",
-    "date": "Apr 29, 2026",
-    "changes": [
-      "Initial release",
-      "Real-time monitoring",
-      "Lightweight performance"
-    ],
-    "downloadUrl": "https://github.com/rixhavraj/NetSpeed/releases/download/v1.0.0/net-speed-v1.0.1.exe",
-    "size": "54KB"
-  }
+    {
+        "version":  "1.0.2",
+        "date":  "May 05, 2026",
+        "changes":  [
+                        "Bugs fixed and speed display improvements"
+                    ],
+        "downloadUrl":  "/net-speed-v1.0.2.exe",
+        "size":  "54KB"
+    },
+    {
+        "version":  "1.0.2",
+        "date":  "May 05, 2026",
+        "changes":  [
+                        "Fixed speed calculation units (MB/s instead of Mbps)",
+                        "Improved speed display precision",
+                        "Bug fixes and performance improvements"
+                    ],
+        "downloadUrl":  "/net-speed-v1.0.2.exe",
+        "size":  "56KB"
+    },
+    {
+        "version":  "1.0.1",
+        "date":  "Apr 30, 2026",
+        "changes":  [
+                        "Added Windows startup capabilities",
+                        "Minor bug fixes"
+                    ],
+        "downloadUrl":  "https://github.com/rixhavraj/NetSpeed/releases/download/v1.0.1/net-speed-v1.0.1.exe",
+        "size":  "54KB"
+    },
+    {
+        "version":  "1.0.0",
+        "date":  "Apr 29, 2026",
+        "changes":  [
+                        "Initial release",
+                        "Real-time monitoring",
+                        "Lightweight performance"
+                    ],
+        "downloadUrl":  "https://github.com/rixhavraj/NetSpeed/releases/download/v1.0.0/net-speed-v1.0.0.exe",
+        "size":  "54KB"
+    }
 ]
