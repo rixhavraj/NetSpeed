@@ -15,7 +15,7 @@ app:
   download-url: ${APP_DOWNLOAD_URL:/api/downloads/net-speed-v1.0.2.exe}
   file-name: ${APP_FILE_NAME:net-speed-v1.0.2.exe}
   file-size: ${APP_FILE_SIZE:56KB}
-  changelog: ${APP_CHANGELOG:Bugs fixed and speed display improvements}
+  changelog: ${APP_CHANGELOG:Fixed speed calculation units, updated UI preview, and resolved versioning issues.}
   download-dir: ${APP_DOWNLOAD_DIR:}
   cors:
     allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173,https://rixhavraj.github.io}
