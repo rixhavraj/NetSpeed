@@ -58,9 +58,6 @@ const Hero = () => {
             Live Preview
           </a>
         </motion.div>
-
-        {/* Dashboard Preview */}
-        <Dashboard />
       </div>
     </section>
   );
