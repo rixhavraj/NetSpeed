@@ -34,7 +34,7 @@ const Download = () => {
               className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12"
             >
               <a 
-                href="/net-speed-v1.0.2.exe" 
+                href="https://github.com/rixhavraj/NetSpeed/releases/download/v1.0.2/net-speed-v1.0.2.exe" 
                 download="net-speed-v1.0.2.exe"
                 className="group relative flex items-center justify-center gap-3 bg-white text-black px-10 py-5 rounded-2xl font-bold text-xl transition-all hover:scale-105 active:scale-95 shadow-[0_0_50px_-10px_rgba(255,255,255,0.4)]"
               >
