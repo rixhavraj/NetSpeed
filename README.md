@@ -40,6 +40,8 @@ npm run dev
 
 ## 🔄 How to Update App Version & Replace `.exe`
 
+claude add 
+
 ### 1. Updating Version Info
 To update the version, size, or changelog, open the following file:
 `backend/src/main/java/com/app/service/DownloadService.java`
