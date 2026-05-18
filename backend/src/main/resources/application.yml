@@ -11,11 +11,11 @@ spring:
       max-request-size: 50MB
 
 app:
-  version: ${APP_VERSION:1.0.2}
-  download-url: ${APP_DOWNLOAD_URL:/api/downloads/net-speed-v1.0.2.exe}
-  file-name: ${APP_FILE_NAME:net-speed-v1.0.2.exe}
+  version: ${APP_VERSION:1.0.3}
+  download-url: ${APP_DOWNLOAD_URL:/api/downloads/net-speed-v1.0.3.exe}
+  file-name: ${APP_FILE_NAME:net-speed-v1.0.3.exe}
   file-size: ${APP_FILE_SIZE:56KB}
-  changelog: ${APP_CHANGELOG:Fixed speed calculation units, updated UI preview, and resolved versioning issues.}
+  changelog: ${APP_CHANGELOG:Fixed byte to Megabyte display scaling and decimal formatting}
   download-dir: ${APP_DOWNLOAD_DIR:}
   cors:
     allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173,https://rixhavraj.github.io}
