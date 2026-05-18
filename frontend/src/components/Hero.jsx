@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, Zap, Play } from 'lucide-react';
 import Dashboard from './Dashboard';
+import versionsData from '../data/versions.json';
 
 const Hero = () => {
   return (
@@ -18,7 +19,7 @@ const Hero = () => {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
           </span>
-          <span className="font-medium tracking-wide">v1.0.2 is now available</span>
+          <span className="font-medium tracking-wide">v{versionsData[0].version} is now available</span>
         </motion.div>
 
         {/* Headline */}
