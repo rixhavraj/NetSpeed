@@ -47,6 +47,8 @@ const VersionHistory = () => {
                   <a 
                     href={getDownloadUrl(ver.downloadUrl)}
                     download={`NetSpeed-v${ver.version}.exe`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-6 py-3 rounded-xl font-medium transition-colors border border-white/5 hover:border-white/10 w-full md:w-auto justify-center"
                   >
                     <DownloadIcon className="w-5 h-5" />
