@@ -1,5 +1,15 @@
 [
     {
+        "version":  "1.0.4",
+        "date":  "May 19, 2026",
+        "changes":  [
+                        "Upgraded to accurate base-1000 byte-based display (MB/s and KB/s)",
+                        "Designed a super-sleek, smaller widget layout for modern desktops"
+                    ],
+        "downloadUrl":  "/net-speed-v1.0.4.exe",
+        "size":  "135KB"
+    },
+    {
         "version":  "1.0.3",
         "date":  "May 18, 2026",
         "changes":  [
