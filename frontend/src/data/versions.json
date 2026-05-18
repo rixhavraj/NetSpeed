@@ -1,5 +1,16 @@
 [
     {
+        "version":  "1.0.6",
+        "date":  "May 19, 2026",
+        "changes":  [
+                        "Single Active Connection: Direct active internet index identification via GetBestInterface",
+                        "No Jitter & Zero Drift: High-precision std::chrono::high_resolution_clock duration calculations",
+                        "Pure Byte Display: Strict, mathematically exact base-1024 (B/s, KB/s, MB/s, GB/s) formatting"
+                    ],
+        "downloadUrl":  "https://github.com/rixhavraj/NetSpeed/releases/download/v1.0.6/net-speed-v1.0.6.exe",
+        "size":  "2.2MB"
+    },
+    {
         "version":  "1.0.5",
         "date":  "May 19, 2026",
         "changes":  [
