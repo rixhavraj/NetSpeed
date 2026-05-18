@@ -1,5 +1,16 @@
 [
     {
+        "version":  "1.0.5",
+        "date":  "May 19, 2026",
+        "changes":  [
+                        "Precision physical-only interface monitoring with GetIfTable2",
+                        "High-resolution std::chrono timing without Sleep-scheduling drifts",
+                        "Dynamic base-1024 unit formatting up to GB/s with 2 decimal precision"
+                    ],
+        "downloadUrl":  "https://github.com/rixhavraj/NetSpeed/releases/download/v1.0.5/net-speed-v1.0.5.exe",
+        "size":  "2.2MB"
+    },
+    {
         "version":  "1.0.4",
         "date":  "May 19, 2026",
         "changes":  [
