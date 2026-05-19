@@ -1,0 +1,14 @@
+# C++ Widget Build and IDE Artifacts
+.vs/
+build/
+out/
+dist/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+*.user
+*.exe
+*.zip
+*.msi
+*.msix

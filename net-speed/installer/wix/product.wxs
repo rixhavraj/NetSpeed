@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Name="NetSpeedWidget"
+    Manufacturer="NetSpeedWidget"
+    Version="1.0.0.0"
+    UpgradeCode="C4DE46A8-487C-4C22-91D6-A0D0F6AC7910"
+    Scope="perMachine">
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of NetSpeedWidget is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFilesFolder">
+      <Directory Id="INSTALLFOLDER" Name="NetSpeedWidget">
+        <Component Id="AppExecutable" Guid="E0E69F95-EF67-496D-9F36-7E65691378B4">
+          <File Id="NetSpeedWidgetExe" Source="$(var.SourceDir)\NetSpeedWidget.exe" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="NetSpeedWidget">
+        <Component Id="StartMenuShortcut" Guid="A9C6A77F-F75E-4215-AACB-34D4F54F6FE5">
+          <Shortcut
+            Id="ApplicationStartMenuShortcut"
+            Name="NetSpeedWidget"
+            Description="Real-time internet speed widget"
+            Target="[INSTALLFOLDER]NetSpeedWidget.exe"
+            WorkingDirectory="INSTALLFOLDER" />
+          <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+          <RegistryValue Root="HKCU" Key="Software\NetSpeedWidget" Name="Installed" Type="integer" Value="1" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="ProductFeature" Title="NetSpeedWidget" Level="1">
+      <ComponentRef Id="AppExecutable" />
+      <ComponentRef Id="StartMenuShortcut" />
+    </Feature>
+  </Package>
+</Wix>

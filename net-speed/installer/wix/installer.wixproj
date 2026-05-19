@@ -1,0 +1,10 @@
+<Project Sdk="WixToolset.Sdk/4.0.4">
+  <PropertyGroup>
+    <OutputName>NetSpeedWidgetSetup</OutputName>
+    <OutputType>Package</OutputType>
+    <SourceDir>..\..\build\bin</SourceDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="product.wxs" />
+  </ItemGroup>
+</Project>
