@@ -9,7 +9,7 @@ import ServerError from './pages/ServerError';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/NetSpeed">
       <div className="min-h-screen bg-background text-foreground selection:bg-primary/30 selection:text-white relative">
         {/* Global Background Video Animation */}
         <div className="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
