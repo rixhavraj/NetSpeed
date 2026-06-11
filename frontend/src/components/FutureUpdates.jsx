@@ -46,7 +46,7 @@ const FutureUpdates = () => {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-3xl p-8 relative shadow-2xl overflow-hidden"
+            className="glass-panel rounded-3xl p-8 relative shadow-2xl overflow-hidden"
           >
              {/* Radar scan animation effect */}
              <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
@@ -88,7 +88,7 @@ const FutureUpdates = () => {
           >
              <h3 className="text-2xl font-bold text-white mb-8">It Identifies the Culprits:</h3>
              
-             <div className="group flex items-center gap-5 bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 p-6 rounded-2xl transition-all">
+             <div className="group flex items-center gap-5 glass hover:bg-white/10 p-6 rounded-2xl transition-all">
                 <div className="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <AppWindow className="w-7 h-7 text-blue-400" />
                 </div>
@@ -98,7 +98,7 @@ const FutureUpdates = () => {
                 </div>
              </div>
 
-             <div className="group flex items-center gap-5 bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 p-6 rounded-2xl transition-all">
+             <div className="group flex items-center gap-5 glass hover:bg-white/10 p-6 rounded-2xl transition-all">
                 <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <HardDriveDownload className="w-7 h-7 text-emerald-400" />
                 </div>
@@ -108,7 +108,7 @@ const FutureUpdates = () => {
                 </div>
              </div>
 
-             <div className="group flex items-center gap-5 bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 p-6 rounded-2xl transition-all">
+             <div className="group flex items-center gap-5 glass hover:bg-white/10 p-6 rounded-2xl transition-all">
                 <div className="w-14 h-14 rounded-2xl bg-orange-500/20 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <MonitorPlay className="w-7 h-7 text-orange-400" />
                 </div>

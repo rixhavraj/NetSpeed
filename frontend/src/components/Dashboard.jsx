@@ -13,16 +13,8 @@ const Dashboard = () => {
       transition={{ duration: 0.8, delay: 0.5 }}
       className="mt-12 w-full max-w-5xl px-4 md:px-0 mx-auto"
     >
-      <div 
-        className="rounded-3xl overflow-hidden p-1 md:p-2"
-        style={{
-          background: 'rgba(255, 255, 255, 0.03)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-          backdropFilter: 'blur(20px)'
-        }}
-      >
-        <div className="bg-[#050505] rounded-2xl overflow-hidden flex flex-col md:flex-row h-[500px] text-[11px] select-none border border-white/5 shadow-2xl">
+      <div className="glass-panel rounded-3xl overflow-hidden p-1 md:p-2">
+        <div className="glass rounded-2xl overflow-hidden flex flex-col md:flex-row h-[500px] text-[11px] select-none border border-white/5 shadow-2xl">
           {/* App Sidebar */}
           <div className="hidden md:flex w-52 border-r border-white/5 bg-white/[0.02] flex-col p-4 gap-6">
             <div className="flex items-center gap-2 px-2 mb-2">
@@ -51,7 +43,7 @@ const Dashboard = () => {
           {/* Main Monitor View */}
           <div className="flex-1 flex flex-col overflow-hidden bg-white/[0.01]">
             {/* Window Header */}
-            <div className="h-12 border-b border-white/5 bg-[#050505] flex items-center justify-between px-6">
+            <div className="h-12 border-b border-white/5 glass flex items-center justify-between px-6">
               <div className="flex items-center gap-4">
                 <span className="font-bold text-white">Ethernet Adapter 2</span>
                 <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">ACTIVE</span>

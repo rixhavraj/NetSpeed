@@ -16,7 +16,7 @@ const Download = () => {
         <h2 className="text-5xl md:text-7xl font-black mb-8 tracking-tighter text-white text-readable">Ready to upgrade?</h2>
         <p className="text-2xl text-zinc-300 mb-16 font-light text-readable">Download the ultra-lightweight NetSpeed widget for Windows.</p>
 
-        <div className="glass rounded-[2.5rem] p-10 md:p-16 border border-white/10 relative overflow-hidden shadow-2xl">
+        <div className="glass-panel rounded-[2.5rem] p-10 md:p-16 relative overflow-hidden">
           {/* Animated gradient border top */}
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 opacity-80"></div>
           

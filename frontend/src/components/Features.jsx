@@ -70,7 +70,7 @@ const Features = () => {
             <motion.div 
               key={idx}
               variants={itemVariants}
-              className="group relative p-8 rounded-3xl glass hover:bg-white/[0.03] transition-all duration-500 overflow-hidden"
+              className="group relative p-8 rounded-3xl glass-card hover:bg-white/[0.05] transition-all duration-500 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               

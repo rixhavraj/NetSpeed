@@ -13,7 +13,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-sm text-zinc-300 mb-8 shadow-2xl"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-sm text-zinc-300 mb-8"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
@@ -29,8 +29,8 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[1.1] text-readable"
         >
-          Real-time network speed. <br />
-          <span className="text-gradient">Zero bloat.</span>
+          Real-time internet speed. <br />
+          <span className="text-gradient">In a desktop widget.</span>
         </motion.h1>
 
         {/* Subheadline */}
@@ -40,7 +40,7 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="text-lg md:text-2xl text-zinc-300 max-w-3xl mx-auto mb-12 font-light leading-relaxed text-readable"
         >
-          A beautifully minimal, always-on-top desktop widget for Windows that tracks your network activity without eating your system resources.
+          The ultimate net speed and internet speed meter downloader. A beautifully minimal tool that downloads inside your PC and shows your real-time network speed in an always-on-top widget.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -54,7 +54,7 @@ const Hero = () => {
             <Download className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
             Download for Windows
           </a>
-          <a href="#preview" className="group w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-medium text-lg text-zinc-300 hover:text-white glass hover:bg-white/10 transition-all active:scale-95">
+          <a href="#preview" className="group w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-medium text-lg text-zinc-300 hover:text-white glass-card hover:bg-white/10 transition-all active:scale-95">
             <Zap className="w-5 h-5 text-accent group-hover:scale-110 transition-transform" />
             Live Preview
           </a>

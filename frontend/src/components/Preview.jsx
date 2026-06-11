@@ -8,25 +8,26 @@ const Gauge = ({ value, max: initialMax, phase }) => {
   const arcLength = circumference * 0.75; // 270 degrees
   const dasharray = `${circumference} ${circumference}`;
   
-  // Dynamic max value
-  const currentMax = value > 100 ? (value > 500 ? 1000 : 500) : 100;
-  
-  const boundedValue = Math.min(Math.max(value, 0), currentMax);
-  const progress = boundedValue / currentMax;
-  
-  // Fix: SVG stroke-dashoffset for circular gauges must use the full circumference
+  const ticks = [0, 5, 10, 50, 100, 250, 500, 750, 1000];
+
+  // Custom non-linear scale function to match the reference UI intervals
+  const getProgress = (val) => {
+    const bounded = Math.min(Math.max(val, 0), 1000);
+    if (bounded === 0) return 0;
+    for (let i = 0; i < ticks.length - 1; i++) {
+      if (bounded >= ticks[i] && bounded <= ticks[i+1]) {
+        const intervalProgress = (bounded - ticks[i]) / (ticks[i+1] - ticks[i]);
+        return (i + intervalProgress) / (ticks.length - 1);
+      }
+    }
+    return 1;
+  };
+
+  const progress = getProgress(value);
+
   const dashoffset = circumference - (progress * arcLength);
   const backgroundDashoffset = circumference - arcLength;
-
-  // Needle angle (-135 to +135)
   const angle = -135 + (progress * 270);
-
-  // Generate dynamic ticks
-  const ticks = currentMax === 100 
-    ? [0, 20, 40, 60, 80, 100] 
-    : currentMax === 500 
-    ? [0, 100, 200, 300, 400, 500] 
-    : [0, 200, 400, 600, 800, 1000];
 
   return (
     <div className="relative w-64 h-64 mx-auto flex items-center justify-center">
@@ -43,23 +44,23 @@ const Gauge = ({ value, max: initialMax, phase }) => {
         <circle 
           cx="100" cy="100" r={radius} 
           fill="none" 
-          stroke="rgba(255,255,255,0.05)" 
-          strokeWidth="12" 
+          stroke="rgba(255,255,255,0.2)" 
+          strokeWidth="16" 
           strokeDasharray={dasharray}
           strokeDashoffset={backgroundDashoffset}
-          strokeLinecap="round"
+          strokeLinecap="square"
         />
         
         {/* Active track */}
         <motion.circle 
           cx="100" cy="100" r={radius} 
           fill="none" 
-          stroke="url(#gaugeGradient)" 
-          strokeWidth="12" 
+          stroke="#eab308" 
+          strokeWidth="16" 
           strokeDasharray={dasharray}
           animate={{ strokeDashoffset: dashoffset }}
           transition={{ type: "spring", stiffness: 50, damping: 15 }}
-          strokeLinecap="round"
+          strokeLinecap="square"
         />
 
         {/* Needle */}
@@ -68,48 +69,45 @@ const Gauge = ({ value, max: initialMax, phase }) => {
           animate={{ rotate: angle - 135 }}
           transition={{ type: "spring", stiffness: 50, damping: 15 }}
         >
-          <line x1="100" y1="100" x2="100" y2="40" stroke="white" strokeWidth="4" strokeLinecap="round" className="opacity-90 shadow-2xl" />
-          <circle cx="100" cy="100" r="8" fill="#1e293b" stroke="white" strokeWidth="3" />
+          <line x1="100" y1="100" x2="100" y2="40" stroke="white" strokeWidth="6" strokeLinecap="square" className="opacity-100 drop-shadow-[4px_4px_0_rgba(0,0,0,1)]" />
+          <circle cx="100" cy="100" r="10" fill="#000000" stroke="white" strokeWidth="4" />
         </motion.g>
 
         {/* Fixed Ticks */}
         {ticks.map((tick, i) => {
-          const tickProgress = tick / currentMax;
+          const tickProgress = i / (ticks.length - 1);
           const tickAngle = -135 + (tickProgress * 270);
-          // Calculate exact SVG coordinates (0 angle is 3 o'clock, SVG is rotated 135deg)
           const rad = (tickAngle - 225) * (Math.PI / 180);
-          const x1 = 100 + Math.cos(rad) * (radius - 15);
-          const y1 = 100 + Math.sin(rad) * (radius - 15);
-          const x2 = 100 + Math.cos(rad) * (radius - 22);
-          const y2 = 100 + Math.sin(rad) * (radius - 22);
-          const tx = 100 + Math.cos(rad) * (radius - 35);
-          const ty = 100 + Math.sin(rad) * (radius - 35);
+          
+          // Position text outside the needle path but inside the gauge border space
+          // Since radius is 80 and the SVG is 200x200 (center 100,100)
+          // `radius - 24` is 56, inside the active arc. The reference has ticks INSIDE the arc.
+          const tx = 100 + Math.cos(rad) * (radius - 28);
+          const ty = 100 + Math.sin(rad) * (radius - 28);
           
           return (
-            <g key={i}>
-              <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
-              <text 
-                x={tx} y={ty} 
-                fill="rgba(255,255,255,0.7)" 
-                fontSize="10" 
-                textAnchor="middle" 
-                alignmentBaseline="middle" 
-                fontWeight="500" 
-                transform={`rotate(-135 ${tx} ${ty})`}
-              >
-                {tick}
-              </text>
-            </g>
+            <text 
+              key={i}
+              x={tx} y={ty} 
+              fill="rgba(255,255,255,0.7)" 
+              fontSize="14" 
+              textAnchor="middle" 
+              alignmentBaseline="middle" 
+              fontWeight="900" 
+              transform={`rotate(-135 ${tx} ${ty})`}
+            >
+              {tick}
+            </text>
           );
         })}
       </svg>
 
-      {/* Center text overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pt-24">
-        <span className="text-4xl font-black text-white tracking-tighter tabular-nums">
+      {/* Bottom text overlay */}
+      <div className="absolute inset-x-0 bottom-[-20px] flex flex-col items-center">
+        <span className="text-5xl font-black text-white tracking-tighter tabular-nums drop-shadow-[4px_4px_0_rgba(59,130,246,1)]">
           {phase === 'idle' ? '0.00' : value.toFixed(2)}
         </span>
-        <span className="text-sm font-medium text-zinc-400">Mbps</span>
+        <span className="text-sm font-black text-white uppercase bg-black px-2 border-2 border-white mt-1">Mbps</span>
       </div>
     </div>
   );
@@ -144,15 +142,15 @@ const Preview = () => {
   const [clientInfo, setClientInfo] = useState({ ip: "--", isp: "--", city: "--", country: "--", colo: "--" });
 
   useEffect(() => {
-    fetch('https://speed.cloudflare.com/meta')
+    fetch('https://ipapi.co/json/')
       .then(res => res.json())
       .then(data => {
         setClientInfo({
-          ip: data.clientIp || "--",
-          isp: data.asOrganization || "--",
+          ip: data.ip || "--",
+          isp: data.org || "--",
           city: data.city || "--",
-          country: data.country || "--",
-          colo: data.colo || "--"
+          country: data.country_code || "--",
+          colo: "Primary"
         });
       })
       .catch(err => console.error("Failed to fetch client info", err));
@@ -252,33 +250,29 @@ const Preview = () => {
   };
 
   return (
-    <section id="preview" className="py-24 relative bg-[#04060f]">
-      {/* Background gradients */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none" />
+    <section id="preview" className="py-24 relative bg-black border-y-8 border-white">
+      {/* Background gradients removed for brutalism */}
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center relative">
-               <div className="absolute inset-1 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></div>
-               <Activity className="w-5 h-5 text-cyan-400" />
-            </div>
-            <h2 className="text-4xl font-black text-white tracking-tight">Speed<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Test</span></h2>
+        <div className="text-center mb-16">
+          <div className="inline-block border-4 border-white bg-[#ec4899] px-6 py-3 shadow-[8px_8px_0px_0px_#ffffff] mb-4">
+             <h2 className="text-5xl font-black text-black uppercase tracking-tighter flex items-center gap-3">
+               <Activity className="w-8 h-8 text-black" />
+               SPEEDTEST
+             </h2>
           </div>
-          <p className="text-zinc-400 text-lg">Test your internet speed in a single click</p>
+          <p className="text-white font-bold text-xl uppercase tracking-widest bg-black inline-block px-3 py-1 border-2 border-white">Test your internet speed in a single click</p>
         </div>
 
         {/* Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6">
           
           {/* Left Panel - Speedometer */}
-          <div className="bg-[#0b1021]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden flex flex-col items-center justify-between min-h-[400px]">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 opacity-50"></div>
+          <div className="brutal-card p-8 relative overflow-hidden flex flex-col items-center justify-between min-h-[400px]">
             
-            <Gauge value={currentSpeed} max={100} phase={phase} />
+            <Gauge value={currentSpeed} max={1000} phase={phase} />
 
             <div className="mt-4 flex flex-col items-center">
               <div className="h-6 mb-4">
@@ -290,7 +284,7 @@ const Preview = () => {
               <button 
                 onClick={runTest}
                 disabled={testing}
-                className="group relative w-full sm:w-64 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_-5px_rgba(59,130,246,0.5)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="brutal-button w-full sm:w-64 flex items-center justify-center gap-3 px-8 py-4 font-black text-xl uppercase disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {testing ? <RotateCw className="w-5 h-5 animate-spin" /> : <Play className="w-5 h-5 fill-white" />}
                 {testing ? "Testing..." : (phase === 'complete' ? "Run Test Again" : "Start Live Test")}
@@ -299,7 +293,7 @@ const Preview = () => {
           </div>
 
           {/* Right Panel - Stats */}
-          <div className="bg-[#0b1021]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl flex flex-col justify-between">
+          <div className="brutal-card p-8 flex flex-col justify-between">
             
             {/* Download Row */}
             <div className="flex items-center justify-between mb-8">
@@ -319,7 +313,7 @@ const Preview = () => {
               </div>
             </div>
 
-            <div className="w-full h-px bg-white/5 mb-8"></div>
+            <div className="w-full border-b-4 border-white mb-8"></div>
 
             {/* Upload Row */}
             <div className="flex items-center justify-between mb-8">
@@ -339,7 +333,7 @@ const Preview = () => {
               </div>
             </div>
 
-            <div className="w-full h-px bg-white/5 mb-6"></div>
+            <div className="w-full border-b-4 border-white mb-6"></div>
 
             {/* Micro Stats */}
             <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-8">
@@ -358,11 +352,11 @@ const Preview = () => {
             </div>
 
             {/* Server Info */}
-            <div className="bg-white/[0.02] rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 border border-white/5">
+            <div className="border-4 border-white bg-black p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 shadow-[4px_4px_0px_0px_#ffffff]">
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 flex items-center gap-1 mb-1"><Globe className="w-3 h-3 text-blue-400"/> SERVER</span>
                 <p className="text-sm font-semibold text-white">{clientInfo.city !== "--" ? `${clientInfo.city}, ${clientInfo.country}` : 'Loading...'}</p>
-                <p className="text-xs text-zinc-500">{clientInfo.colo !== "--" ? `Cloudflare (${clientInfo.colo})` : '--'}</p>
+                <p className="text-xs text-zinc-500">{clientInfo.isp !== "--" ? `Server (${clientInfo.colo})` : '--'}</p>
               </div>
               <div>
                 <span className="text-[10px] font-bold text-zinc-500 flex items-center gap-1 mb-1"><Monitor className="w-3 h-3 text-blue-400"/> YOUR IP</span>

@@ -1,4 +1,5 @@
-import { Activity, User,  } from 'lucide-react';
+import { Activity, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -12,8 +13,14 @@ const Footer = () => {
           <span className="font-bold tracking-tight">NetSpeed</span>
         </div>
         
-        <div className="text-sm text-zinc-500">
-          &copy; {new Date().getFullYear()} NetSpeed. All rights reserved.
+        <div className="flex flex-col items-center gap-1">
+          <div className="text-sm text-zinc-500">
+            &copy; {new Date().getFullYear()} NetSpeed. All rights reserved.
+          </div>
+          <div className="flex gap-4 text-xs font-medium mt-1">
+            <Link to="/privacy" className="text-zinc-400 hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="text-zinc-400 hover:text-white transition-colors">Terms & Conditions</Link>
+          </div>
         </div>
 
         <div className="flex items-center gap-4">
