@@ -263,7 +263,7 @@ const Preview = () => {
                SPEEDTEST
              </h2>
           </div>
-          <p className="text-white font-bold text-xl uppercase tracking-widest bg-black inline-block px-3 py-1 border-2 border-white">Test your internet speed in a single cliCK / UNDER DEVELOPMENT </p>
+          <p className="text-white font-bold text-xl uppercase tracking-widest bg-black inline-block px-3 py-1 border-2 border-white">Test your internet speed / UNDER DEVELOPMENT </p>
         </div>
 
         {/* Dashboard Grid */}

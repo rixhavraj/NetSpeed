@@ -8,4 +8,4 @@ export default defineConfig({
     tailwindcss(),
   ],
   base: './', // Makes all paths relative so it works on any GitHub Pages URL
-})
+});
